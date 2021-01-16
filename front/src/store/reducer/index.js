@@ -1,7 +1,10 @@
 import {combineReducers} from 'redux'
 
-import productsReducer from './productsReducer'
+import entryReducer from './entryReducer'
+import egressReducer from './egressReducer'
+
 
 export default combineReducers({
-    productos: productsReducer
+    entryes: entryReducer,
+    egresses: egressReducer
 })

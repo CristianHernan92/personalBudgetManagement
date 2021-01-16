@@ -1,11 +1,11 @@
 import axios from 'axios'
 
-import {TRAER_TODOS,TRAER_COINCIDENTES} from '../actions/index'
+import {BRING_ALL_ENTRYES,BRING_ALL_EGRESSES} from '../actions/index'
 
-export const traertodos = (dispatch)=>()=> {   
-    axios.get('/productos/traertodos').then((res)=> dispatch(TRAER_TODOS(res.data)))
+export const bringallentryes= (dispatch)=>()=> {   
+    axios.get('/operation/bringallentryes').then((res)=> dispatch(BRING_ALL_ENTRYES(res.data)))
 }
 
-export const traercoincidentes = (dispatch)=>(value)=> {   
-    axios.post('/productos/traercoincidentes',{value}).then((res)=> dispatch(TRAER_COINCIDENTES(res.data)))
+export const bringallegresses= (dispatch)=>()=> {   
+    axios.get('/operation/bringallegresses').then((res)=> dispatch(BRING_ALL_EGRESSES(res.data)))
 }

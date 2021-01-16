@@ -2,21 +2,21 @@ const sequelize=require("sequelize");
 const db=require("../db/index")
 
 
-class Image extends sequelize.Model{};
+class Type extends sequelize.Model{};
 
-Image.init({     
+Type.init({     
     id:{
         type:sequelize.INTEGER,
         primaryKey:true,
         autoIncrement:true,
     },
-    url:{
+    name:{
         type:sequelize.STRING,
     }
 },{
     sequelize:db,
-    modelName:"image",
+    modelName:"type",
 })
 
 
-module.exports=Image;
+module.exports=Type;

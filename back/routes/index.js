@@ -1,16 +1,8 @@
-const express = require("express");
-const router = express.Router();
+const express = require("express")
+const router = express.Router()
 
-const productos = require("./productos")
-const categoria = require("./categoria")
-const localidad = require("./localidad")
-const talle = require ("./talle")
-const usuario = require ("./usuario")
+const operation = require ("./operation")
 
-router.use("/productos", productos );
-router.use("/categoria", categoria);
-router.use("/talle", talle);
-router.use("/localidad", localidad);
-router.use("/usuario", usuario);
+router.use("/operation", operation )
 
 module.exports = router;

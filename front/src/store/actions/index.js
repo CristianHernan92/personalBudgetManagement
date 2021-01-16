@@ -1,13 +1,13 @@
-export const TRAER_TODOS=function(productos){
+export const BRING_ALL_ENTRYES=function(entryes){
     return {
-        type:'TRAER_TODOS',
-        productos:productos
+        type:'BRING_ALL_ENTRYES',
+        entryes
     }
 }
 
-export const TRAER_COINCIDENTES=function(productos){
+export const BRING_ALL_EGRESSES=function(egresses){
     return {
-        type:'TRAER_COINCIDENTES',
-        productos:productos
+        type:'BRING_ALL_EGRESSES',
+        egresses
     }
 }
