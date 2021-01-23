@@ -1,10 +1,12 @@
 import {combineReducers} from 'redux'
 
-import entryReducer from './entryReducer'
-import egressReducer from './egressReducer'
+import entriesandegresses from './entriesandegresses'
+import operations from './operations'
+import totals from './totals'
 
 
 export default combineReducers({
-    entryes: entryReducer,
-    egresses: egressReducer
+    entriesandegresses,
+    operations,
+    totals
 })

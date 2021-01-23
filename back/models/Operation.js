@@ -19,7 +19,7 @@ Operation.init({
         allowNull:false
     },
     date:{
-        type:sequelize.DATE,
+        type:sequelize.DATEONLY,
         allowNull:false
     },
 },{

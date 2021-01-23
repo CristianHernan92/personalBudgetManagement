@@ -1,3 +1,4 @@
+const Sequelize = require('sequelize')
 const operation = require("../models/Operation")
 
 const express = require("express");
@@ -5,23 +6,23 @@ const router = express.Router();
 
 router.post("/create",(req,res,next)=>{
     let data=req.body
-    /* { concept: 'aa', amount: '1', date: '2021-01-02', type: '1' } */
     operation.create({
         concept:data.concept,
-        amount:data.amount,
+        amount:data.amount,        
         date:data.date,
         typeId:data.type        
-    }).then(result=>{        
-        res.send(result);
-    }).catch(err=>{
+    })
+    .then(result=> res.send({result}))
+    .catch(err=>{
         console.log(err)
     })
 })
 
-router.get("/bringallentryes",(req,res,next)=>{
+router.get("/bringallentries",(req,res,next)=>{
     operation.findAll({ where: { typeId: 1 }}).then((result)=>{
         res.send(result)
-    }).catch(err=>{
+    })
+    .catch(err=>{
         console.log(err)
     })
 })
@@ -30,10 +31,53 @@ router.get("/bringallentryes",(req,res,next)=>{
 router.get("/bringallegresses",(req,res,next)=>{
     operation.findAll({ where: { typeId: 2 }}).then((result)=>{
         res.send(result)
-    }).catch(err=>{
+    })
+    .catch(err=>{
         console.log(err)
     })
 })
 
+router.get("/bringlasttenoperations",(req,res,next)=>{
+    operation.findAll({limit:10,order: [['id', 'DESC']]}).then((result)=>{   
+        res.send(result)
+    })
+    .catch(err=>{
+        console.log(err)
+    })
+})
+
+router.get("/totalentriesandegresses",(req,res,next)=>{
+    operation.findAll({attributes: [[Sequelize.fn('sum', Sequelize.col('amount')), 'entries']],where:{typeId:1}})
+    .then(totalentries=>operation.findAll({attributes: [[Sequelize.fn('sum', Sequelize.col('amount')), 'egresses']],where:{typeId:2}})
+    .then(totalegresses=> {
+        let objeto={totalentries:totalentries[0].dataValues.entries,totalegresses:totalegresses[0].dataValues.egresses}        
+        if(objeto.totalentries==null){
+            objeto.totalentries=0
+        }            
+        if(objeto.totalegresses==null){
+            objeto.totalegresses=0
+        }            
+        res.send(objeto)}))
+    .catch(err=>{
+        console.log(err)
+    })
+})
+
+router.post("/delete",(req,res,next)=>{
+    operation.destroy({where:{id:req.body.id}})
+    .then(result=> res.send({result}))
+    .catch(err=>{
+        console.log(err)
+    })
+})
+
+router.post("/update",(req,res,next)=>{
+    operation.update({concept:req.body.concept,amount:req.body.amount,date:req.body.date},
+        {where:{id:req.body.id}})
+    .then(result=> res.send({result}))
+    .catch(err=>{
+        console.log(err)
+    })
+})
 
 module.exports = router

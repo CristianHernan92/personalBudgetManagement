@@ -1,13 +1,13 @@
 const init={
-    entryes:[]
+    lasttenoperations:[]
 }
 
 export default (state=init,action) =>{
     const newState = {... state}
     switch(action.type){
-        case 'BRING_ALL_ENTRYES':                       
-            newState.entryes = action.entryes
-            break       
+        case 'UPDATE_LAST_TEN_OPERATIONS':               
+            newState.lasttenoperations = action.lastten
+            break  
         default:
             return state
     }
