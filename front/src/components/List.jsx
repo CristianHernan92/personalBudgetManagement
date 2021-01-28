@@ -1,12 +1,13 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import axios from 'axios'
+import logo from '../../utils/loading.gif'
 
 import {bringallentries,bringallegresses} from '../store/actioncreators/index'
 
 class List extends React.Component{
 
-    onClickSendEdit(e){              
+    onClickSendEdit(e){            
             let inputConcept=e.target.parentNode.children[0].children[0]
             let inputAmount=e.target.parentNode.children[0].children[1]
             let inputDate=e.target.parentNode.children[0].children[2]
@@ -15,25 +16,45 @@ class List extends React.Component{
             else if(isNaN(inputAmount.value)){
                 alert("Ingress a valid mount !!!")
             }else{
-                axios.post("operation/update",{id:e.target.parentNode.parentNode.id,concept:inputConcept.value,amount:inputAmount.value,date:inputDate.value}).then(()=> {alert("Edition success !!!");window.location.assign("/")})
+                e.target.parentNode.children[1].disabled=true
+                e.target.parentNode.children[2].disabled=true
+                e.target.parentNode.children[3].style.display=''                
+                axios.post("operation/update",{id:e.target.parentNode.parentNode.id,concept:inputConcept.value,amount:inputAmount.value,date:inputDate.value})
+                .then(()=> {
+                    alert("Edition success !!!")
+                    window.location.assign("/")
+                })
+                .catch(err=>{
+                    alert("An error occurred !!!")
+                    window.location.reload()
+                })
             }        
     }   
 
     onClickEdit(e){
         e.target.parentNode.style="display: none"
-        e.target.parentNode.parentNode.children[1].style="display:''"       
+        e.target.parentNode.parentNode.children[1].style.display=''     
     }  
     
     onClickCancel(e){
         e.target.parentNode.style="display: none"
-        e.target.parentNode.parentNode.children[0].style="display:''"
+        e.target.parentNode.parentNode.children[0].style.display=''
         
     }   
 
-    onClickDeleteEntrieOrEgress(id){        
-        return ()=>{
-            axios.post("/operation/delete",{id}).then(()=> {alert("Deletion success !!!");window.location.assign("/")})
-        }
+    onClickDeleteEntrieOrEgress(e){   
+            e.target.parentNode.children[1].disabled=true
+            e.target.parentNode.children[2].disabled=true
+            e.target.parentNode.children[3].style.display=''
+            axios.post("/operation/delete",{id:e.target.parentNode.parentNode.id})
+            .then(()=>{
+                alert("Deletion success !!!")
+                window.location.assign("/")
+            })
+            .catch(err=>{
+                alert("An error occurred !!!")
+                window.location.reload()
+            })
     }
 
     componentDidMount(){
@@ -53,14 +74,19 @@ class List extends React.Component{
                                             <li>{entry.amount}</li>
                                             <li>{entry.date}</li>                                        
                                         </ol>                                    
-                                        <input type="button" value="Delete" onClick={this.onClickDeleteEntrieOrEgress(entry.id)}/>
+                                        <input type="button" value="Delete" onClick={this.onClickDeleteEntrieOrEgress}/>
                                         <input type="button" value="Edit" onClick={this.onClickEdit}/>
+                                        <img src={logo} alt="" style={{display:'none',width:'2%'}}/>                                                                                                                     
                                     </div>
                                     <div style={{display:'none'}}>
                                         <div>
-                                            <input type="text" defaultValue={entry.concept} style={{display:'block'}}/><input type="text" defaultValue={entry.amount} style={{display:'block'}}/><input type="date" defaultValue={entry.date} style={{display:'block'}}/>
-                                        </div>                                        
-                                        <input type="button" value="Edit" onClick={this.onClickSendEdit}/><input type="button" value="Cancel" onClick={this.onClickCancel}/>
+                                            <input type="text" defaultValue={entry.concept} style={{display:'block'}}/>
+                                            <input type="text" defaultValue={entry.amount} style={{display:'block'}}/>
+                                            <input type="date" defaultValue={entry.date} style={{display:'block'}}/>
+                                        </div>
+                                        <input type="button" value="Edit" onClick={this.onClickSendEdit}/>
+                                        <input type="button" value="Cancel" onClick={this.onClickCancel}/>
+                                        <img src={logo} alt="" style={{display:'none',width:'2%'}}/>                                                                                                                     
                                     </div>
                                 </div>                                                                
                         })}                           
@@ -75,14 +101,19 @@ class List extends React.Component{
                                             <li>{egress.amount}</li>
                                             <li>{egress.date}</li>                                        
                                         </ol>                                    
-                                        <input type="button" value="Delete" onClick={this.onClickDeleteEntrieOrEgress(egress.id)}/>
+                                        <input type="button" value="Delete" onClick={this.onClickDeleteEntrieOrEgress}/>
                                         <input type="button" value="Edit" onClick={this.onClickEdit}/>
+                                        <img src={logo} alt="" style={{display:'none',width:'2%'}}/> 
                                     </div>
                                     <div style={{display:'none'}}>
                                         <div>
-                                            <input type="text" defaultValue={egress.concept} style={{display:'block'}}/><input type="text" defaultValue={egress.amount} style={{display:'block'}}/><input type="date" defaultValue={egress.date} style={{display:'block'}}/>
+                                            <input type="text" defaultValue={egress.concept} style={{display:'block'}}/>
+                                            <input type="text" defaultValue={egress.amount} style={{display:'block'}}/>
+                                            <input type="date" defaultValue={egress.date} style={{display:'block'}}/>
                                         </div>                                        
-                                        <input type="button" value="Edit" onClick={this.onClickSendEdit}/><input type="button" value="Cancel" onClick={this.onClickCancel}/>
+                                        <input type="button" value="Edit" onClick={this.onClickSendEdit}/>
+                                        <input type="button" value="Cancel" onClick={this.onClickCancel}/>
+                                        <img src={logo} alt="" style={{display:'none',width:'2%'}}/>
                                     </div>
                                 </div>                                
                         })}

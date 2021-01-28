@@ -14,16 +14,15 @@ export const bringallegresses= (dispatch)=>()=> {
     .catch(err=> {console.log(err)})
 }
 
-export const updatelasttenoperations= (dispatch)=>()=> {
-    axios.get("/operation/bringlasttenoperations")
+export const updatelasttenoperations= (dispatch)=>(id)=> {
+    axios.get(`/operation/bringlasttenoperations/${id}`)
     .then(res=> dispatch(UPDATE_LAST_TEN_OPERATIONS(res.data)))
     .catch(err=> {console.log(err)})
 }
 
 export const createandupdatelasttenoperations= (dispatch)=>(objeto)=> 
     axios.post("/operation/create/",objeto)
-    .then(()=>updatelasttenoperations(dispatch)())
-    .catch(err=> {console.log(err)})
+    .then(()=>updatelasttenoperations(dispatch)(objeto.id))
 
 
 export const bringtotals= (dispatch)=>()=> {

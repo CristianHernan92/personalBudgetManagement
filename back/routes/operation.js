@@ -10,12 +10,10 @@ router.post("/create",(req,res,next)=>{
         concept:data.concept,
         amount:data.amount,        
         date:data.date,
-        typeId:data.type        
+        typeId:data.type,
+        userId:data.id       
     })
     .then(result=> res.send({result}))
-    .catch(err=>{
-        console.log(err)
-    })
 })
 
 router.get("/bringallentries",(req,res,next)=>{
@@ -27,7 +25,6 @@ router.get("/bringallentries",(req,res,next)=>{
     })
 })
 
-
 router.get("/bringallegresses",(req,res,next)=>{
     operation.findAll({ where: { typeId: 2 }}).then((result)=>{
         res.send(result)
@@ -37,8 +34,8 @@ router.get("/bringallegresses",(req,res,next)=>{
     })
 })
 
-router.get("/bringlasttenoperations",(req,res,next)=>{
-    operation.findAll({limit:10,order: [['id', 'DESC']]}).then((result)=>{   
+router.get("/bringlasttenoperations/:id",(req,res,next)=>{
+    operation.findAll({where:{userId:req.params.id}},{limit:10,order: [['id', 'DESC']]}).then((result)=>{           
         res.send(result)
     })
     .catch(err=>{
@@ -66,18 +63,12 @@ router.get("/totalentriesandegresses",(req,res,next)=>{
 router.post("/delete",(req,res,next)=>{
     operation.destroy({where:{id:req.body.id}})
     .then(result=> res.send({result}))
-    .catch(err=>{
-        console.log(err)
-    })
 })
 
 router.post("/update",(req,res,next)=>{
     operation.update({concept:req.body.concept,amount:req.body.amount,date:req.body.date},
         {where:{id:req.body.id}})
     .then(result=> res.send({result}))
-    .catch(err=>{
-        console.log(err)
-    })
 })
 
 module.exports = router

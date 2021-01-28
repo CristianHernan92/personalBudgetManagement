@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import {updatelasttenoperations,bringtotals} from '../store/actioncreators/index'
 
 class Home extends React.Component{
+
     convert(typeId){
         if(typeId==1)
          return "Entry"
@@ -10,8 +11,8 @@ class Home extends React.Component{
     }
     
     componentDidMount(){
-        this.props.updatelasttenoperations()
-        this.props.bringtotals()
+        this.props.updatelasttenoperations(1)
+        this.props.bringtotals(this.props.userid)
     }
 
     render(){
@@ -29,7 +30,7 @@ class Home extends React.Component{
                     <div style={{background:'orange',width:'50%'}}>
                         <h1 style={{textAlign:'center'}}>Last ten registered</h1>
                         <div>
-                        {this.props.operations.lasttenoperations.map(operation=>{
+                       {/*  {this.props.operations.lasttenoperations.map(operation=>{
                             return <ol key={operation.id}>
                                     <li>
                                         {operation.concept}
@@ -44,7 +45,7 @@ class Home extends React.Component{
                                         {this.convert(operation.typeId)}
                                     </li>
                                 </ol>
-                        })}
+                        })} */}
                         </div>                        
                     </div>
                 </div>
