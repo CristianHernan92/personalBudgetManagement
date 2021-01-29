@@ -15,38 +15,44 @@ export default class Main extends React.Component{
     constructor(){
         super()
         this.state={
-            user:""
+            user:{}
         }
     }
 
     componentDidMount(){
-        axios.get("/user/get").then(res=>{
-            this.setState({user:res.data})
-        })
-        .catch(err=>{
-            alert("An error occurred !!!")
-            alert(err)
-        })       
+       axios.get("user/get").then(res=>{
+           this.setState({user:res.data})
+       })
+       .catch(err=>{
+           console.log(err)
+       })
     }
+   
 
     render(){
-        return <div className="Main" style={{display:'flex',flexDirection:'column'}}>            
-                    {
-                        this.state.user.id ?
-                            <Menu loggedin={true}></Menu>
-                            :
-                            <Menu loggedin={false}></Menu>
-                    }
-                    <Redirect to="/home"/>
-                    <Switch>                        
-                        <Route path="/home" component={<Home userid={this.state.user.id}></Home>}></Route>
-                        <Route path="/create" component={<Create userid={this.state.user.id}></Create>}></Route>
-                        <Route path="/list" component={()=><List userid={this.state.user.id}></List>}></Route>
-                        <Route path="/register" component={Register}></Route>
-                        <Route path="/login" component={Login}></Route>
+        return  this.state.user.id ?
+
+                <div className="Main" style={{display:'flex',flexDirection:'column'}}>     
+                    <Menu loggedin={true}></Menu>
+                    <Redirect to='/home'></Redirect>
+                    <Switch>                   
+                        <Route path="/home" render={(props)=><Home {...props} ></Home>}></Route>
+                        <Route path="/create" component={Create}></Route>
+                        <Route path="/list" component={List}></Route>
                         <Route path="/logout" component={Logout}></Route>
                     </Switch>      
                 </div>            
+
+                :
+
+                <div className="Main" style={{display:'flex',flexDirection:'column'}}>     
+                    <Menu loggedin={false}></Menu>
+                    <Redirect to='/welcome'></Redirect>
+                    <Switch>                   
+                        <Route path="/welcome" render={()=><h1>Welcome !!!</h1>}></Route>
+                        <Route path="/register" component={Register}></Route>
+                        <Route path="/login" component={Login}></Route>
+                    </Switch>      
+                </div>  
     }
 }
- 

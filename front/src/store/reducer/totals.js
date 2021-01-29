@@ -1,11 +1,11 @@
 const init={
-    totals:{}
+    totals:[]
 }
 
 export default (state=init,action) =>{ 
     const newState = {... state}
     switch(action.type){
-        case 'BRING_TOTALS':                      
+        case 'BRING_TOTALS':                    
             newState.totals = action.totals
             break  
         default:

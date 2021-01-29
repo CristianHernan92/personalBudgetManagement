@@ -4,10 +4,13 @@ import {Link} from 'react-router-dom'
 export default class Menu extends React.Component{
 
     render(){
-        return <div className="menu" style={{background:'gainsboro',display:'flex',height:'50px'}}>
+        return <div className="menu" style={{background:'darkgrey',display:'flex',height:'50px'}}>
         <div style={{display:'flex',width:"50%",justifyContent:"center",alignSelf:'center'}}>
                 <div style={{width:'85%'}}>
+                {this.props.loggedin ?     
                     <Link to="/home" style={{textDecoration:'none'}}>HOME</Link>
+                    :
+                    <Link to="/welcome" style={{textDecoration:'none'}}>WELCOME</Link>                }
                 </div>         
         </div>
         <div style={{display:'flex',width:"50%",justifyContent:"flex-end",alignSelf:'center'}}>

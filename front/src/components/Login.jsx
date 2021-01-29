@@ -4,8 +4,8 @@ import logo from '../../utils/loading.gif'
 
 
 export default class Login extends React.Component{
-    constructor(props){
-        super(props)
+    constructor(){
+        super()
         this.onClickSubmit=this.onClickSubmit.bind(this)
         this.onClickCancel=this.onClickCancel.bind(this)
     }
@@ -14,7 +14,7 @@ export default class Login extends React.Component{
         e.target.disabled=true
         e.target.parentNode.children[0].disabled=true
         e.target.parentNode.children[2].style.display=""
-        this.props.history.push('/home')
+        this.props.history.push('/welcome')
     }
 
     onClickSubmit(e){
@@ -39,12 +39,12 @@ export default class Login extends React.Component{
                 }                    
                 else{
                     alert("Login success !!!")
-                    window.location.replace('/');
+                    window.location.href='http://localhost:3000/'
                 }
             })                
             .catch(err=>{
                 alert("An error occurred !!!")
-                window.location.reload()
+                window.location.href='http://localhost:3000/'
             })
         }
             

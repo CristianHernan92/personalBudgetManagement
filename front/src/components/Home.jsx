@@ -1,5 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
+
 import {updatelasttenoperations,bringtotals} from '../store/actioncreators/index'
 
 class Home extends React.Component{
@@ -9,16 +10,16 @@ class Home extends React.Component{
          return "Entry"
         return "Egress" 
     }
-    
+
     componentDidMount(){
-        this.props.updatelasttenoperations(1)
-        this.props.bringtotals(this.props.userid)
+        this.props.bringtotals()
+        this.props.updatelasttenoperations()                        
     }
 
     render(){
         return <div style={{display:'flex',justifyContent:'space-around'}}>
                     <div style={{width:'50%'}}>
-                        <ol>                            
+                        <ol>                         
                             {Object.keys(this.props.totals.totals).map(elemento=>{      
                                 return <li key={elemento}>
                                     <h2>{elemento}(mount)</h2>
@@ -27,10 +28,10 @@ class Home extends React.Component{
                             })}
                         </ol>                        
                     </div>
-                    <div style={{background:'orange',width:'50%'}}>
+                    <div style={{width:'50%'}}>
                         <h1 style={{textAlign:'center'}}>Last ten registered</h1>
                         <div>
-                       {/*  {this.props.operations.lasttenoperations.map(operation=>{
+                        {this.props.operations.lasttenoperations.map(operation=>{
                             return <ol key={operation.id}>
                                     <li>
                                         {operation.concept}
@@ -45,10 +46,10 @@ class Home extends React.Component{
                                         {this.convert(operation.typeId)}
                                     </li>
                                 </ol>
-                        })} */}
+                        })}
                         </div>                        
                     </div>
-                </div>
+                </div>                
     }
 }
 

@@ -16,8 +16,8 @@ router.post("/create",(req,res,next)=>{
     .then(result=> res.send({result}))
 })
 
-router.get("/bringallentries",(req,res,next)=>{
-    operation.findAll({ where: { typeId: 1 }}).then((result)=>{
+router.get("/bringallentries/:id",(req,res,next)=>{
+    operation.findAll({ where: { typeId: 1,userId:req.params.id}}).then((result)=>{
         res.send(result)
     })
     .catch(err=>{
@@ -25,8 +25,8 @@ router.get("/bringallentries",(req,res,next)=>{
     })
 })
 
-router.get("/bringallegresses",(req,res,next)=>{
-    operation.findAll({ where: { typeId: 2 }}).then((result)=>{
+router.get("/bringallegresses/:id",(req,res,next)=>{
+    operation.findAll({ where: { typeId: 2,userId:req.params.id}}).then((result)=>{
         res.send(result)
     })
     .catch(err=>{
@@ -35,7 +35,7 @@ router.get("/bringallegresses",(req,res,next)=>{
 })
 
 router.get("/bringlasttenoperations/:id",(req,res,next)=>{
-    operation.findAll({where:{userId:req.params.id}},{limit:10,order: [['id', 'DESC']]}).then((result)=>{           
+    operation.findAll({where:{userId: req.params.id }},{limit:10,order: [['id']]}).then((result)=>{           
         res.send(result)
     })
     .catch(err=>{
@@ -43,9 +43,9 @@ router.get("/bringlasttenoperations/:id",(req,res,next)=>{
     })
 })
 
-router.get("/totalentriesandegresses",(req,res,next)=>{
-    operation.findAll({attributes: [[Sequelize.fn('sum', Sequelize.col('amount')), 'entries']],where:{typeId:1}})
-    .then(totalentries=>operation.findAll({attributes: [[Sequelize.fn('sum', Sequelize.col('amount')), 'egresses']],where:{typeId:2}})
+router.get("/totalentriesandegresses/:id",(req,res,next)=>{
+    operation.findAll({attributes: [[Sequelize.fn('sum', Sequelize.col('amount')), 'entries']],where:{typeId:1,userId:req.params.id}})
+    .then(totalentries=>operation.findAll({attributes: [[Sequelize.fn('sum', Sequelize.col('amount')), 'egresses']],where:{typeId:2,userId:req.params.id}})
     .then(totalegresses=> {
         let objeto={totalentries:totalentries[0].dataValues.entries,totalegresses:totalegresses[0].dataValues.egresses}        
         if(objeto.totalentries==null){

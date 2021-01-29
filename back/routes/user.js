@@ -41,6 +41,7 @@ router.get("/get", (req, res, next) => {
     res.send(req.user)
   else
   res.send({})
-});
+})
+
 
 module.exports = router

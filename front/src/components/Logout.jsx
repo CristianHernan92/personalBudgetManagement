@@ -5,11 +5,11 @@ import logo from '../../utils/loading.gif'
 export default ()=>{
     function logout(){
         axios.get("/user/logout").then(()=>{
-            window.location.assign('/')
+            window.location.href='http://localhost:3000/'
         })
         .catch(err=>{
             alert("An error occurred !!!")
-            window.location.assign('/')
+            window.location.href='http://localhost:3000/'
         })
     }
 

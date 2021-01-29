@@ -6,27 +6,34 @@ import logo from '../../utils/loading.gif'
 import {bringallentries,bringallegresses} from '../store/actioncreators/index'
 
 class List extends React.Component{
+    constructor(){
+        super()
+        this.onClickSendEdit=this.onClickSendEdit.bind(this)
+        this.onClickDeleteEntrieOrEgress=this.onClickDeleteEntrieOrEgress.bind(this)
+    }
 
     onClickSendEdit(e){            
             let inputConcept=e.target.parentNode.children[0].children[0]
             let inputAmount=e.target.parentNode.children[0].children[1]
             let inputDate=e.target.parentNode.children[0].children[2]
             if(inputConcept.value===inputConcept.defaultValue&&inputAmount.value===inputAmount.defaultValue&&inputDate.value===inputDate.defaultValue)
-                alert("You changed nothing !!!")
-            else if(isNaN(inputAmount.value)){
+                alert("You changed nothing !!!")            
+            else if(!isNaN(inputConcept.value))
+                alert("Ingress a concept without numbers !!!")
+            else if(isNaN(inputAmount.value))
                 alert("Ingress a valid mount !!!")
-            }else{
+            else{                
                 e.target.parentNode.children[1].disabled=true
                 e.target.parentNode.children[2].disabled=true
                 e.target.parentNode.children[3].style.display=''                
                 axios.post("operation/update",{id:e.target.parentNode.parentNode.id,concept:inputConcept.value,amount:inputAmount.value,date:inputDate.value})
-                .then(()=> {
+                .then(()=> {                    
                     alert("Edition success !!!")
-                    window.location.assign("/")
+                    this.props.history.push('/home')
                 })
                 .catch(err=>{
                     alert("An error occurred !!!")
-                    window.location.reload()
+                    this.props.history.push('/home')
                 })
             }        
     }   
@@ -38,8 +45,7 @@ class List extends React.Component{
     
     onClickCancel(e){
         e.target.parentNode.style="display: none"
-        e.target.parentNode.parentNode.children[0].style.display=''
-        
+        e.target.parentNode.parentNode.children[0].style.display=''                
     }   
 
     onClickDeleteEntrieOrEgress(e){   
@@ -49,11 +55,11 @@ class List extends React.Component{
             axios.post("/operation/delete",{id:e.target.parentNode.parentNode.id})
             .then(()=>{
                 alert("Deletion success !!!")
-                window.location.assign("/")
+                this.props.history.push('/home')
             })
             .catch(err=>{
                 alert("An error occurred !!!")
-                window.location.reload()
+                this.props.history.push('/home')
             })
     }
 

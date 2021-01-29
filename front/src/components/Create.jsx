@@ -19,18 +19,19 @@ class Create extends React.Component{
     }
 
     onClickSubmit(e){        
-        e.preventDefault()                
-        console.log(this.props)
-
-        /* if((e.target[0].value&&e.target[1].value&&e.target[2].value&&e.target[3].value)!="")
+        e.preventDefault()       
+        if((e.target[0].value&&e.target[1].value&&e.target[2].value&&e.target[3].value)!="")
         {
-            if(isNaN(e.target[1].value)){
+            if(!isNaN(e.target[0].value))
+                alert("Ingress a concept without numbers !!!")
+            else            
+            if(isNaN(e.target[1].value))
                 alert("Ingress a valid amount !!!")
-            }else{
+            else{
                 e.target[4].disabled=true
                 e.target[5].disabled=true
                 e.target[4].parentNode.children[2].style.display=""
-                this.props.createandupdatelasttenoperations({concept:e.target[0].value,amount:e.target[1].value,date:e.target[2].value,type:e.target[3].value,id:this.props.userid})
+                this.props.createandupdatelasttenoperations({concept:e.target[0].value,amount:e.target[1].value,date:e.target[2].value,type:e.target[3].value})
                 .then(()=> {       
                     alert("Creation success !!!")                    
                     this.props.history.push('/home')
@@ -43,7 +44,7 @@ class Create extends React.Component{
         }
         else{
             alert("Fill all fields !!!")
-        } */
+        }
         
     }
 
